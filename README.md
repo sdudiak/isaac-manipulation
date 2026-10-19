@@ -1,3 +1,2 @@
-# Isaac Sim project template
+# RL manipulation
 
-This is a starting point for isaacsim projects.
