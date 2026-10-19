@@ -1,0 +1,14 @@
+[package]
+version = "0.1.0"
+title = "RL Manipulation Scene Loader"
+description = "Opens a USD scene on startup"
+category = "Simulation"
+
+[dependencies]
+"omni.usd" = {}
+
+[[python.module]]
+name = "rl_manipulation.scene_loader"
+
+[settings]
+exts."rl_manipulation.scene_loader".scene = ""

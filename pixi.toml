@@ -8,6 +8,9 @@ platforms = [{ platform = "linux-64", glibc = "2.35" }]
 [dependencies]
 python = "3.11.*"
 
+[activation]
+scripts = ["/opt/ros/jazzy/setup.bash"]
+
 [activation.env]
 ROS_DISTRO = "jazzy"
 RMW_IMPLEMENTATION = "rmw_fastrtps_cpp"
@@ -21,4 +24,5 @@ torch = { version = "==2.7.0+cu128", index = "https://download.pytorch.org/whl/c
 isaacsim = { version = "==5.1.0", extras = ["all", "extscache"] }
 
 [tasks]
-isaacsim = { cmd = "isaacsim --ext-folder isaac_ws/extensions"}
+isaacsim = { cmd = "env -u PYTHONPATH -u OLD_PYTHONPATH isaacsim --ext-folder isaac_ws/extensions" }
+isaacsim-default-scene = { cmd = "env -u PYTHONPATH -u OLD_PYTHONPATH isaacsim --ext-folder isaac_ws/extensions --enable rl_manipulation.scene_loader --/exts/rl_manipulation.scene_loader/scene=isaac_ws/assets/scenes/default_secene.usda" }
