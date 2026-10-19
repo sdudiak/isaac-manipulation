@@ -44,6 +44,23 @@ def OmniGraph "ROS_JointStates"
         custom double outputs:simulationTime
     }
 
+    def OmniGraphNode "PublishClock"
+    {
+        custom uint64 inputs:context
+        uint64 inputs:context.connect = </ROS_JointStates/Context.outputs:context>
+        custom uint inputs:execIn (
+            customData = {
+                bool isExecution = 1
+            }
+        )
+        uint inputs:execIn.connect = </ROS_JointStates/OnPlaybackTick.outputs:tick>
+        custom double inputs:timeStamp
+        double inputs:timeStamp.connect = </ROS_JointStates/ReadSimTime.outputs:simulationTime>
+        custom string inputs:topicName = "/clock"
+        token node:type = "isaacsim.ros2.bridge.ROS2PublishClock"
+        int node:typeVersion = 1
+    }
+
     def OmniGraphNode "PublisherJointState"
     {
         custom string inputs:qosProfile
@@ -68,7 +85,7 @@ def OmniGraph "ROS_JointStates"
         )
         custom double inputs:timeStamp
         double inputs:timeStamp.connect = </ROS_JointStates/ReadSimTime.outputs:simulationTime>
-        custom string inputs:topicName = "/joint_states"
+        custom string inputs:topicName = "joint_states"
         token node:type = "isaacsim.ros2.bridge.ROS2PublishJointState"
         int node:typeVersion = 1
     }
@@ -87,7 +104,7 @@ def OmniGraph "ROS_JointStates"
         )
         uint inputs:execIn.connect = </ROS_JointStates/OnPlaybackTick.outputs:tick>
         custom string inputs:nodeNamespace = "isaac"
-        custom string inputs:topicName = "/joint_command"
+        custom string inputs:topicName = "joint_command"
         token node:type = "isaacsim.ros2.bridge.ROS2SubscribeJointState"
         int node:typeVersion = 2
         custom double[] outputs:effortCommand
