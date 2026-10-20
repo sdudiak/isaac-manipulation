@@ -8,7 +8,12 @@
     upAxis = "Z"
 )
 
-def Xform "World"
+def Xform "World" (
+    prepend variantSets = "cameras"
+    variants = {
+        string cameras = "enabled"
+    }
+)
 {
     def Xform "GroundPlane"
     {
@@ -94,6 +99,7 @@ def Xform "World"
                 doc = "Namespace of the prim in Isaac Sim"
             )
             double3 xformOp:translate = (-0.5, 0, 1)
+        }
     }
 
     def Scope "graphs"
@@ -112,8 +118,115 @@ def Xform "World"
                 custom rel inputs:targetPrim = </World/robots/franka>
             }
         }
+
+        def "camera_wrist" (
+            prepend payload = @../graphs/camera.usda@
+        )
+        {
+            over "ColorRenderProduct"
+            {
+                custom rel inputs:cameraPrim = </World/robots/franka/Sensors/camera_wrist/RSD455/Camera_OmniVision_OV9782_Color>
+            }
+
+            over "DepthRenderProduct"
+            {
+                custom rel inputs:cameraPrim = </World/robots/franka/Sensors/camera_wrist/RSD455/Camera_Pseudo_Depth>
+            }
+        }
+
+        def "camera_top" (
+            prepend payload = @../graphs/camera.usda@
+        )
+        {
+            over "ColorRenderProduct"
+            {
+                custom rel inputs:cameraPrim = </World/robots/franka/Sensors/camera_top/RSD455/Camera_OmniVision_OV9782_Color>
+            }
+
+            over "DepthRenderProduct"
+            {
+                custom rel inputs:cameraPrim = </World/robots/franka/Sensors/camera_top/RSD455/Camera_Pseudo_Depth>
+            }
+
+            over "ColorImage"
+            {
+                custom string inputs:nodeNamespace = "/isaac/cameara/top"
+                custom string inputs:frameId = "top_color_optical_frame"
+            }
+
+            over "ColorCameraInfo"
+            {
+                custom string inputs:nodeNamespace = "/isaac/cameara/top"
+                custom string inputs:frameId = "top_color_optical_frame"
+            }
+
+            over "DepthImage"
+            {
+                custom string inputs:nodeNamespace = "/isaac/cameara/top"
+                custom string inputs:frameId = "top_depth_optical_frame"
+            }
+
+            over "DepthCameraInfo"
+            {
+                custom string inputs:nodeNamespace = "/isaac/cameara/top"
+                custom string inputs:frameId = "top_depth_optical_frame"
+            }
+        }
     }
+
+    variantSet "cameras" = {
+        "enabled" {
+            over "robots"
+            {
+                over "franka" (
+                    variants = {
+                        string cameras = "enabled"
+                    }
+                )
+                {
+                }
+            }
+
+            over "graphs"
+            {
+                over "camera_wrist" (
+                    active = true
+                )
+                {
+                }
+                over "camera_top" (
+                    active = true
+                )
+                {
+                }
+            }
+        }
+        "disabled" {
+            over "robots"
+            {
+                over "franka" (
+                    variants = {
+                        string cameras = "disabled"
+                    }
+                )
+                {
+                }
+            }
+
+            over "graphs"
+            {
+                over "camera_wrist" (
+                    active = false
+                )
+                {
+                }
+                over "camera_top" (
+                    active = false
+                )
+                {
+                }
+            }
+        }
     }
+
 }
-
-
