@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>rl_manipulation_bringup</name>
+  <name>isaac_manipulation_bringup</name>
   <version>0.1.0</version>
   <description>MoveIt and topic-based ros2_control bringup for the Isaac Sim Panda.</description>
   <maintainer email="sdudiak01@gmail.com">Staszek</maintainer>

@@ -8,7 +8,7 @@ import omni.kit.app
 import omni.usd
 
 LOGGER = logging.getLogger(__name__)
-SETTING = "/exts/rl_manipulation.scene_loader/scene"
+SETTING = "/exts/isaac_manipulation.scene_loader/scene"
 
 
 class SceneLoaderExtension(omni.ext.IExt):

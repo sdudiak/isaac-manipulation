@@ -1,5 +1,5 @@
 [workspace]
-name = "rl-manipulation"
+name = "isaac-manipulation"
 version = "0.1.0"
 description = "TODO"
 channels = ["conda-forge"]
@@ -25,17 +25,17 @@ isaacsim = { version = "==5.1.0", extras = ["all", "extscache"] }
 
 [tasks]
 isaacsim = { cmd = "env -u PYTHONPATH -u OLD_PYTHONPATH isaacsim --ext-folder isaac_ws/extensions" }
-isaacsim-default-scene = { cmd = "env -u PYTHONPATH -u OLD_PYTHONPATH isaacsim --ext-folder isaac_ws/extensions --enable rl_manipulation.scene_loader --/exts/rl_manipulation.scene_loader/scene=isaac_ws/assets/scenes/default_secene.usda" }
+isaacsim-default-scene = { cmd = "env -u PYTHONPATH -u OLD_PYTHONPATH isaacsim --ext-folder isaac_ws/extensions --enable isaac_manipulation.scene_loader --/exts/isaac_manipulation.scene_loader/scene=isaac_ws/assets/scenes/default_secene.usda" }
 
 [tasks.ros-build]
 cwd = "ros_ws"
 cmd = """
-env -u PYTHONPATH -u OLD_PYTHONPATH -u AMENT_PREFIX_PATH -u CMAKE_PREFIX_PATH -u COLCON_PREFIX_PATH -u LD_LIBRARY_PATH PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin bash --noprofile --norc -ec 'source /opt/ros/jazzy/setup.bash; exec colcon build --symlink-install --packages-up-to rl_manipulation_bringup --cmake-args -DBUILD_TESTING=OFF -DPython3_EXECUTABLE=/usr/bin/python3'
+env -u PYTHONPATH -u OLD_PYTHONPATH -u AMENT_PREFIX_PATH -u CMAKE_PREFIX_PATH -u COLCON_PREFIX_PATH -u LD_LIBRARY_PATH PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin bash --noprofile --norc -ec 'source /opt/ros/jazzy/setup.bash; exec colcon build --symlink-install --packages-up-to isaac_manipulation_bringup --cmake-args -DBUILD_TESTING=OFF -DPython3_EXECUTABLE=/usr/bin/python3'
 """
 
 [tasks.ros-moveit]
 depends-on = ["ros-build"]
 cwd = "ros_ws"
 cmd = """
-env -u PYTHONPATH -u OLD_PYTHONPATH -u AMENT_PREFIX_PATH -u CMAKE_PREFIX_PATH -u COLCON_PREFIX_PATH -u LD_LIBRARY_PATH PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin bash --noprofile --norc -ec 'source /opt/ros/jazzy/setup.bash; source install/setup.bash; exec ros2 launch rl_manipulation_bringup moveit.launch.py "$@"' --
+env -u PYTHONPATH -u OLD_PYTHONPATH -u AMENT_PREFIX_PATH -u CMAKE_PREFIX_PATH -u COLCON_PREFIX_PATH -u LD_LIBRARY_PATH PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin bash --noprofile --norc -ec 'source /opt/ros/jazzy/setup.bash; source install/setup.bash; exec ros2 launch isaac_manipulation_bringup moveit.launch.py "$@"' --
 """

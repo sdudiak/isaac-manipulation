@@ -13,7 +13,7 @@ from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
     panda_share = Path(get_package_share_directory('moveit_resources_panda_moveit_config'))
-    share = Path(get_package_share_directory('rl_manipulation_bringup'))
+    share = Path(get_package_share_directory('isaac_manipulation_bringup'))
     config = (
         MoveItConfigsBuilder('moveit_resources_panda')
         .robot_description(file_path='config/panda.urdf.xacro', mappings={
